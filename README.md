@@ -26,3 +26,10 @@ celery -A nuclei_tasks worker --loglevel=info -P eventlet
 curl -X POST http://localhost:8080/run -H "Content-Type: application/json" -d '{"target": "http://example.com"}'
 curl -X GET http://localhost:8080/status/<task_id>
 ```
+# Docker
+```bash
+git clone git@github.com:old-joker/ParspackEngine.git
+cd ParspackEngine
+docker compose build
+docker compose up -d
+```
