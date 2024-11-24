@@ -1,0 +1,24 @@
+services:
+  flask:
+    build:
+      context: .
+    command: gunicorn -w 4 -k gevent app:app -b 0.0.0.0:8091
+    ports:
+      - "8091:8091"
+    depends_on:
+      - redis
+      - celery
+    volumes:
+      - ./reports:/reports
+
+  celery:
+    build:
+      context: .
+    command: celery -A nuclei_tasks worker --loglevel=info -P eventlet
+    depends_on:
+      - redis
+    volumes:
+      - ./reports:/reports
+
+  redis:
+    image: "redis"
