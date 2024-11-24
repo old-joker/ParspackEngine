@@ -1,5 +1,0 @@
-flask
-celery 
-redis
-eventlet
-gunicorn
