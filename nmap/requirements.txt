@@ -1,0 +1,8 @@
+Flask
+flask[async]
+gunicorn
+redis
+celery
+celery[redis]
+eventlet
+gevent
