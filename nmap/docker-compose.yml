@@ -1,25 +1,25 @@
 name: nmap
 services:
-  flask:
+  nmap_api:
     build:
       context: .
     command: gunicorn -w 4 -k gevent app:app -b 0.0.0.0:8092
     ports:
       - "8092:8092"
     depends_on:
-      - redis
-      - celery
+      - nmap_redis
+      - nmap_celery
     volumes:
       - ./reports:/reports
 
-  celery:
+  nmap_celery:
     build:
       context: .
     command: celery -A nmap_tasks worker --loglevel=info -P eventlet
     depends_on:
-      - redis
+      - nmap_redis
     volumes:
       - ./reports:/reports
 
-  redis:
+  nmap_redis:
     image: redis

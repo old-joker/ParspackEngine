@@ -1,0 +1,86 @@
+name: ParsPack
+
+networks:
+  engine_network:
+    driver: bridge
+
+services:
+  # Include services from Main
+  main_web:
+    extends:
+      file: ./main/docker-compose.yml
+      service: main_web
+    networks:
+      - engine_network
+  main_redis:
+    extends:
+      file: ./main/docker-compose.yml
+      service: main_redis
+    networks:
+      - engine_network
+  main_worker:
+    extends:
+      file: ./main/docker-compose.yml
+      service: main_worker
+    networks:
+      - engine_network
+
+  # Include services from nuclei
+  nuclei_api:
+    extends:
+      file: ./nuclei/docker-compose.yml
+      service: nuclei_api
+    networks:
+      - engine_network
+  nuclei_celery:
+    extends:
+      file: ./nuclei/docker-compose.yml
+      service: nuclei_celery
+    networks:
+      - engine_network
+  nuclei_redis:
+    extends:
+      file: ./nuclei/docker-compose.yml
+      service: nuclei_redis
+    networks:
+      - engine_network
+
+  # Include services from nmap
+  nmap_api:
+    extends:
+      file: ./nmap/docker-compose.yml
+      service: nmap_api
+    networks:
+      - engine_network
+  nmap_celery:
+    extends:
+      file: ./nmap/docker-compose.yml
+      service: nmap_celery
+    networks:
+      - engine_network
+  nmap_redis:
+    extends:
+      file: ./nmap/docker-compose.yml
+      service: nmap_redis
+    networks:
+      - engine_network
+
+  # Include services from wpscan
+  wpscan_api:
+    extends:
+      file: ./wpscan/docker-compose.yml
+      service: wpscan_api
+    networks:
+      - engine_network
+  wpscan_celery:
+    extends:
+      file: ./wpscan/docker-compose.yml
+      service: wpscan_celery
+    networks:
+      - engine_network
+  wpscan_redis:
+    extends:
+      file: ./wpscan/docker-compose.yml
+      service: wpscan_redis
+    networks:
+      - engine_network

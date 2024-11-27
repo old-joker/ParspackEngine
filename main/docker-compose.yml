@@ -1,0 +1,33 @@
+name: main
+services:
+  main_web:
+    container_name: main_web
+    build:
+      context: .
+    ports:
+      - "5016:5016"
+    links:
+      - main_redis
+    depends_on:
+      - main_redis
+    environment:
+      - FLASK_ENV=development
+
+  main_redis:
+    container_name: main_redis
+    image: redis/redis-stack
+    ports:
+      - "6379:6379"
+      - "8001:8001"
+    hostname: redis
+
+  main_worker:
+    build:
+      context: .
+    hostname: worker
+    entrypoint: celery
+    command: -A app.celery worker --loglevel=info
+    links:
+      - main_redis
+    depends_on:
+      - main_redis

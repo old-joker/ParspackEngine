@@ -1,0 +1,7 @@
+{
+    "name": "PsPack Engine",
+    "version": "1.0.0",
+    "description": "PsPack Engine",
+    "allowed_asset_types": ["fqdn","ip","domain"],
+    "options": {}
+  }
