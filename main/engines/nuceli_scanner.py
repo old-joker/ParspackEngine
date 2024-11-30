@@ -7,8 +7,8 @@ def run_nuclei_scan(scan_id, host, report_folder):
     LOG.info(f"Nuclei scan started for {host}")
         # Forward the scan request to the Nuclei container
     try:
-        nuclei_cmd = "http://nuclei:8091/run"  # Docker network alias
-        response = requests.post(nuclei_cmd, json={"target": host})
+        nuclei_cmd = "http://nuclei:8092/scan"  # Docker network alias
+        response = requests.post(nuclei_cmd, json={"target": host , "options":""})
         
         return jsonify(response.json())
     except Exception as e:

@@ -20,6 +20,7 @@ Flask-CeleryExt==0.4.3
 gitdb==4.0.11
 GitPython==3.1.43
 gunicorn==20.0.4
+gevent
 hiredis==3.0.0
 idna==2.5
 itsdangerous==0.24

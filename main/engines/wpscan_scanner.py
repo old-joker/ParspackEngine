@@ -7,8 +7,8 @@ def run_wpscan(scan_id, domain, report_folder):
     LOG.info(f"WPScan started for {domain}")
         # Forward the scan request to the WPScan container
     try:
-        wpscan_cmd = "http://wpscan:8093/run"  # Docker network alias
-        response = requests.post(wpscan_cmd, json={"target": domain})
+        wpscan_cmd = "http://wpscan:8093/scan"  # Docker network alias
+        response = requests.post(wpscan_cmd, json={"target": domain, "options":""})
         
         return jsonify(response.json())
     except Exception as e:

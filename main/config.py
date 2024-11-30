@@ -14,9 +14,9 @@ class Config:
     DOJO_AUTH_TOKEN = os.environ.get('DOJO_AUTH_TOKEN')
 
     CELERY_BROKER_URL = os.environ.get(
-        'CELERY_BROKER_URL', 'redis://localhost:6379')
+        'CELERY_BROKER_URL', 'redis://default:mypassword@main_redis:6379')
     CELERY_RESULT_BACKEND = os.environ.get(
-        'CELERY_RESULT_BACKEND', 'redis://localhost:6379')
+        'CELERY_RESULT_BACKEND', 'redis://default:mypassword@main_redis:6379')
 
     IP_ENGINES = [
         run_nuclei_scan,

@@ -1,25 +1,12 @@
 name: nuclei
 services:
-  nuclei_api:
+  fastapi-nuclei:
     build:
-      context: .
-    command: gunicorn -w 4 -k gevent app:app -b 0.0.0.0:8091
+      context: .  # Path to the directory containing the Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "8091:8091"
-    depends_on:
-      - nuclei_redis
-      - nuclei_celery
+      - "8092:8092"  # Map container port 8092 to host port 8092
     volumes:
-      - ./reports:/reports
-
-  nuclei_celery:
-    build:
-      context: .
-    command: celery -A nuclei_tasks worker --loglevel=info -P eventlet
-    depends_on:
-      - nuclei_redis
-    volumes:
-      - ./reports:/reports
-
-  nuclei_redis:
-    image: "redis"
+      - ./reports:/app/reports  # Mount the reports folder for persistent storage
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure Python output is displayed in Docker logs

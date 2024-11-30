@@ -1,25 +1,12 @@
 name: wpscan
 services:
-  wpscan_api:
+  fastapi-wpscan:
     build:
-      context: .
-    command: gunicorn -w 4 -k gevent app:app -b 0.0.0.0:8093
+      context: .  # Path to the directory containing the Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "8093:8093"
-    depends_on:
-      - wpscan_redis
-      - wpscan_celery
+      - "8093:8093"  # Map container port 8093 to host port 8093
     volumes:
-      - ./reports:/reports
-
-  wpscan_celery:
-    build:
-      context: .
-    command: celery -A wpscan_tasks worker --loglevel=info -P eventlet
-    depends_on:
-      - wpscan_redis
-    volumes:
-      - ./reports:/reports
-
-  wpscan_redis:
-    image: redis
+      - ./reports:/app/reports  # Mount the reports folder for persistent storage
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure Python output is displayed in Docker logs

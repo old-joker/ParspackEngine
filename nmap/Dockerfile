@@ -1,19 +1,29 @@
-FROM python:3.9-slim
+# Use the official Python image
+FROM python:3.10-slim
 
-# Set working directory
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    nmap \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy requirements file
 COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Nmap
-RUN apt-get update && apt-get install -y nmap
-
-# Copy project files
+# Copy the application code
 COPY . .
 
-# Expose the app on port 8080
-EXPOSE 8092
+# Ensure the reports folder exists
+RUN mkdir -p reports
 
-# CMD ["python", "app.py"]
+# Expose port 8091 for the FastAPI application
+EXPOSE 8091
+
+# Command to run the application
+CMD ["uvicorn", "main:app","--workers", "4" ,"--host", "0.0.0.0", "--port", "8091"]

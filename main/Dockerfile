@@ -9,5 +9,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 EXPOSE 5016
-
-CMD [ "python", "./app.py" ]
