@@ -41,21 +41,22 @@ def start_scan():
     return jsonify({**res, **{"status": "accepted", "details": {"scan_id": scan_id}}})
 
 
-@scan_bp.route('/clean')
-def clean():
-    return current_app.engine.clean()
-
-
-@scan_bp.route('/clean/<scan_id>')
-def clean_scan(scan_id):
-    return current_app.engine.clean_scan(scan_id)
-
 
 @scan_bp.route('/stopscans')
 def stop():
-    return current_app.engine.stop()
+    res = {"page": "stop_scans"}
+    #? stop all jobs
+
+    res.update({"status": "SUCCESS"})
+    return jsonify(res)
 
 
 @scan_bp.route('/stop/<scan_id>')
 def stop_scan(scan_id):
-    return current_app.engine.stop_scan(scan_id)
+    res = {"page": "stop_scan"}
+    killed_jobs = []
+    # ? stop jobs with scan id
+
+    res.update({"status": "success", "details": {
+               "pid": " ".join(killed_jobs), "scan_id": scan_id}})
+    return jsonify(res), 200
